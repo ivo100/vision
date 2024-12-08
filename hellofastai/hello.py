@@ -1,6 +1,7 @@
 import torch
 from fastai.vision.all import *
-print(URLs.PETS)
+# print(URLs.PETS)
+# https://s3.amazonaws.com/fast-ai-imageclas/oxford-iiit-pet.tgz
 
 # Load a dataset
 path = untar_data(URLs.PETS)
@@ -13,9 +14,7 @@ print(torch.backends.mps.is_available())  # Should return True
 device = torch.device("cpu")
 
 # Move model to MPS
-
 #learn = vision_learner(dls, resnet34, metrics=error_rate).to(device)
-
 learn = vision_learner(dls, resnet34, metrics=error_rate)
 
 # Train the model
