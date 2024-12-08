@@ -13,7 +13,9 @@ print(torch.backends.mps.is_available())  # Should return True
 device = torch.device("cpu")
 
 # Move model to MPS
+
 #learn = vision_learner(dls, resnet34, metrics=error_rate).to(device)
+
 learn = vision_learner(dls, resnet34, metrics=error_rate)
 
 # Train the model
