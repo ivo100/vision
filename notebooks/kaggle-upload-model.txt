@@ -1,0 +1,77 @@
+https://www.kaggle.com/discussions/getting-started/340412
+
+# to install latest torch as of eoy 2024 - cuda problems - do not use
+# !pip install --upgrade torch==2.5.0 torchvision==0.20.0 --index-url https://download.pytorch.org/whl/cu123
+
+===
+
+kaggle kernels pull ivostoy/stocks
+
+===
+
+cat ~/.kaggle/kaggle.json
+!echo '{"username":"ivostoy","key":""' > ~/.kaggle/kaggle.json
+
+from kaggle_secrets import UserSecretsClient
+
+user_secrets = UserSecretsClient()
+secret = user_secrets.get_secret("kaggle")
+
+# !cat /root/.config/kaggle/kaggle.json
+# !chmod 600 /root/.config/kaggle/kaggle.json
+
+# Initialize Kaggle API (already preinstalled in Kaggle environment)
+!mkdir -p /kaggle/tmp/dataset
+!cp /kaggle/working/models/chart1.pth /kaggle/tmp/dataset/
+
+import os
+print(os.path.expanduser('~'))
+
+
+!echo '{"title": "chart2", "id": "ivostoy/chart2", "licenses": [{"name": "CC0-1.0"}]}' > /kaggle/working/models/dataset-metadata.json
+
+
+# Upload to Kaggle Datasets
+!kaggle datasets create -p /kaggle/tmp/dataset --dir-mode zip
+
+
+kaggle datasets download -d ivostoy/chart2
+
+import os
+import shutil
+
+# Assuming the home directory is /root, replace accordingly
+home_dir = os.path.expanduser('~')
+kaggle_dir = os.path.join(home_dir, '.kaggle')
+os.makedirs(kaggle_dir, exist_ok=True)
+
+# Path to the uploaded kaggle.json
+uploaded_file_path = '/kaggle/working/kaggle.json'
+
+# Correct target path for the Kaggle API to find the credentials
+target_path = os.path.join(kaggle_dir, 'kaggle.json')
+
+# Move the file
+shutil.move(uploaded_file_path, target_path)
+
+# Set permissions for security
+os.chmod(target_path, 0o600)
+
+!kaggle datasets list
+
+===
+
+import kaggle
+from kaggle.api.kaggle_api_extended import KaggleApi
+from kaggle_secrets import UserSecretsClient
+
+api = KaggleApi()
+api.authenticate()
+api.model_list_cli()
+
+user_secrets = UserSecretsClient()
+secret = user_secrets.get_secret("kaggle")
+print(secret)
+
+
+

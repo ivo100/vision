@@ -1,7 +1,10 @@
 import torch
 from fastai.vision.all import *
-
+from dotenv import load_dotenv
 #path = "/Users/ivostoyanov/.fastai/data/oxford-iiit-pet"
+
+load_dotenv()
+print("PYTORCH_ENABLE_MPS_FALLBACK", os.getenv("PYTORCH_ENABLE_MPS_FALLBACK"))
 
 path = untar_data(URLs.PETS)
 dls = ImageDataLoaders.from_name_re(path, get_image_files(path / "images"), pat=r'(.+)_\d+.jpg', item_tfms=Resize(224))
@@ -29,4 +32,3 @@ try:
     learn.fine_tune(1)
 except Exception as e:
     print("Error details:", e)
-    # If this fails, you might need to print more diagnostic information
