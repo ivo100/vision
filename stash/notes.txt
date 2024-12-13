@@ -1,0 +1,8 @@
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+
+/Applications/Python\ 3.12/Install\ Certificates.command
+
+pip install --upgrade certifi
+pip install fastai
+pip install timm
+
